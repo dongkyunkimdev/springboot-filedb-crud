@@ -8,12 +8,15 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 @Component
 public class PostPersistenceFileAdapter implements PostPersistencePort {
     @Override
     public Post save(Post post) {
-        String path = "./filedb/post/" + post.getTitle() + ".txt";
+        LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
+        String path = "./filedb/post/" + now + "/" + post.getTitle() + ".txt";
         File newFile = new File(path);
         createDirectory(newFile);
 
