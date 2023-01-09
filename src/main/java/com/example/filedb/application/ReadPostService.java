@@ -13,7 +13,6 @@ public class ReadPostService {
     private final PostPersistencePort postPersistencePort;
 
     public ReadPostInfo command(ReadPostCommand command) {
-//        Optional<Post> savedPost = postPersistencePort.findByTitle(command.getTitle());
         Post savedPost = postPersistencePort.findByTitle(command.getTitle())
                 .orElseThrow(() -> new PostNotFoundException(command.getTitle()));
 
