@@ -10,4 +10,6 @@ public interface PostPersistencePort {
     Optional<Post> findByTitle(String title);
 
     boolean isExistsPostByTitle(String title);
+
+    String delete(String title);
 }

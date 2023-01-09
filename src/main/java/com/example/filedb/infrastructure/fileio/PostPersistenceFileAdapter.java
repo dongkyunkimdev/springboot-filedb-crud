@@ -3,6 +3,7 @@ package com.example.filedb.infrastructure.fileio;
 import com.example.filedb.application.PostPersistencePort;
 import com.example.filedb.domain.Post;
 import com.example.filedb.infrastructure.fileio.exception.DirectoryNotFoundException;
+import com.example.filedb.infrastructure.fileio.exception.PostDeleteFailedException;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -55,6 +56,20 @@ public class PostPersistenceFileAdapter implements PostPersistencePort {
         File savedFile = new File(path);
 
         return savedFile.exists();
+    }
+
+    @Override
+    public String delete(String title) {
+        String directory = "./filedb/post";
+        validateDirectory(directory);
+
+        String path = directory + "/" + title + ".txt";
+        File savedFile = new File(path);
+        if (!savedFile.delete()) {
+            throw new PostDeleteFailedException(title);
+        }
+
+        return title;
     }
 
     private void validateDirectory(String directory) {
