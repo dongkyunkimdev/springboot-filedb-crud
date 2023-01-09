@@ -18,7 +18,7 @@ public class PostPersistenceFileAdapter implements PostPersistencePort {
         LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
         String path = "./filedb/post/" + now + "/" + post.getTitle() + ".txt";
         File newFile = new File(path);
-        createDirectory(newFile);
+        createDirectoryIfNotExists(newFile);
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(newFile))) {
             bw.write(post.getContent());
@@ -29,7 +29,7 @@ public class PostPersistenceFileAdapter implements PostPersistencePort {
         return post;
     }
 
-    private static void createDirectory(File newFile) {
+    private static void createDirectoryIfNotExists(File newFile) {
         if (!newFile.getParentFile().exists()) {
             newFile.getParentFile().mkdirs();
         }
