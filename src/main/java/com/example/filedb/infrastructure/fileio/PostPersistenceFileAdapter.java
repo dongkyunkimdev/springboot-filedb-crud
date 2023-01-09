@@ -34,10 +34,12 @@ public class PostPersistenceFileAdapter implements PostPersistencePort {
 
         String path = directory + "/" + title + ".txt";
         File newFile = new File(path);
+        String line = "";
         String content = "";
 
         try (BufferedReader br = new BufferedReader(new FileReader(newFile))) {
-            while ((content += br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
+                content += line;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
