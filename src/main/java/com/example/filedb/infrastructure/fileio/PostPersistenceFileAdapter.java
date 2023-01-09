@@ -13,9 +13,10 @@ public class PostPersistenceFileAdapter implements PostPersistencePort {
     @Override
     public Post save(Post post) {
         String directory = "./filedb/post";
+        createDirectoryIfNotExists(directory);
+
         String path = directory + "/" + post.getTitle() + ".txt";
         File newFile = new File(path);
-        createDirectoryIfNotExists(newFile);
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(newFile))) {
             bw.write(post.getContent());
@@ -36,7 +37,8 @@ public class PostPersistenceFileAdapter implements PostPersistencePort {
         String content = "";
 
         try (BufferedReader br = new BufferedReader(new FileReader(newFile))) {
-            while ((content += br.readLine()) != null) {}
+            while ((content += br.readLine()) != null) {
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -51,9 +53,10 @@ public class PostPersistenceFileAdapter implements PostPersistencePort {
         }
     }
 
-    private static void createDirectoryIfNotExists(File newFile) {
-        if (!newFile.getParentFile().exists()) {
-            newFile.getParentFile().mkdirs();
+    private static void createDirectoryIfNotExists(String directory) {
+        File directoryFile = new File(directory);
+        if (!directoryFile.exists()) {
+            directoryFile.mkdirs();
         }
     }
 }
