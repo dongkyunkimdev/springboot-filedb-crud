@@ -1,7 +1,6 @@
 package com.example.filedb.infrastructure.fileio;
 
 import com.example.filedb.application.PostPersistencePort;
-import com.example.filedb.common.util.DateUtil;
 import com.example.filedb.domain.Post;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +13,7 @@ import java.io.IOException;
 public class PostPersistenceFileAdapter implements PostPersistencePort {
     @Override
     public Post save(Post post) {
-        String directory = "./filedb/post/" + DateUtil.now();
+        String directory = "./filedb/post/";
         String path = directory + "/" + post.getTitle() + ".txt";
         File newFile = new File(path);
         createDirectoryIfNotExists(newFile);
