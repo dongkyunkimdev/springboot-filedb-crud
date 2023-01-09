@@ -8,4 +8,6 @@ public interface PostPersistencePort {
     Post save(Post toEntity);
 
     Optional<Post> findByTitle(String title);
+
+    boolean isExistsPostByTitle(String title);
 }

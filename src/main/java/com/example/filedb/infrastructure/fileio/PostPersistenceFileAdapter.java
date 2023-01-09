@@ -48,6 +48,15 @@ public class PostPersistenceFileAdapter implements PostPersistencePort {
         return Optional.of(new Post(title, content));
     }
 
+    @Override
+    public boolean isExistsPostByTitle(String title) {
+        String directory = "./filedb/post";
+        String path = directory + "/" + title + ".txt";
+        File savedFile = new File(path);
+
+        return savedFile.exists();
+    }
+
     private void validateDirectory(String directory) {
         File directoryFile = new File(directory);
         if (!directoryFile.exists()) {
