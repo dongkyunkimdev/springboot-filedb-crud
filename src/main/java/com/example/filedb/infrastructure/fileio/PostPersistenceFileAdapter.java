@@ -1,6 +1,7 @@
 package com.example.filedb.infrastructure.fileio;
 
 import com.example.filedb.application.PostPersistencePort;
+import com.example.filedb.common.util.DateUtil;
 import com.example.filedb.domain.Post;
 import org.springframework.stereotype.Component;
 
@@ -8,15 +9,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 
 @Component
 public class PostPersistenceFileAdapter implements PostPersistencePort {
     @Override
     public Post save(Post post) {
-        LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
-        String path = "./filedb/post/" + now + "/" + post.getTitle() + ".txt";
+        String directory = "./filedb/post/" + DateUtil.now();
+        String path = directory + "/" + post.getTitle() + ".txt";
         File newFile = new File(path);
         createDirectoryIfNotExists(newFile);
 
