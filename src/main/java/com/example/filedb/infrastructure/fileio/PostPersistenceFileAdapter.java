@@ -13,8 +13,9 @@ import java.io.IOException;
 public class PostPersistenceFileAdapter implements PostPersistencePort {
     @Override
     public Post save(Post post) {
-        String path = "./" + post.getTitle() + ".txt";
+        String path = "./filedb/post/" + post.getTitle() + ".txt";
         File newFile = new File(path);
+        createDirectory(newFile);
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(newFile))) {
             bw.write(post.getContent());
@@ -23,5 +24,11 @@ public class PostPersistenceFileAdapter implements PostPersistencePort {
         }
 
         return post;
+    }
+
+    private static void createDirectory(File newFile) {
+        if (!newFile.getParentFile().exists()) {
+            newFile.getParentFile().mkdirs();
+        }
     }
 }
